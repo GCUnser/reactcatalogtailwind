@@ -1,7 +1,7 @@
 import "./App.css";
 import logo from "./logo.png";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Products } from "./Products";
 import { Categories } from "./Categories";
 
