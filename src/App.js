@@ -61,14 +61,14 @@ const App = () => {
   };
 
   return (
-    <div className="flex fixed flex-row">
-      <div className="h-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
+    <div className="flex fixed flex-col">
+      <div className="w-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
         <div className="px-6 py-4">
           <h1 className="text-3xl mb-2 font-bold text-teal-500"> Product Catalog App </h1>
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
-          <div className="py-10">
+          <div className="py-3">
             <input
               type="search"
               placeholder="Search"
