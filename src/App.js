@@ -9,7 +9,7 @@ const render_products = (ProductsCategory) => {
   return (
     <div className="category-section fixed">
       <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length})</h2>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "800px", overflowY: "scroll" }}>
+      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}>
         {/* Loop Products */}
         {ProductsCategory.map((product, index) => (
           <div key={index} className="group relative shadow-lg">
@@ -82,7 +82,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500"
           </div>
         </div>
       </div>
-      <div className="ml-5 p-10 xl:basis-4/5">
+      <div className="ml-5 p-3 xl:basis-4/5">
         {console.log("Before render :", Products.length, ProductsCategory.length)}
         {render_products(ProductsCategory)}
       </div>
