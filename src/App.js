@@ -68,6 +68,9 @@ const App = () => {
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
+          <button class="btn btn-info rounded-pill px-10" type="button">
+            Checkout
+          </button>
           <div className="py-3">
             <input
               type="search"
