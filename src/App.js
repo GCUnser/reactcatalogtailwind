@@ -69,20 +69,6 @@ const App = () => {
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
           <div className="py-10">
-            {Categories ? <p className="text-white">Tags : </p> : ""}
-            {Categories.map((tag) => (
-              <button
-                key={tag}
-                className="btn btn-info rounded-pill px-3"
-                onClick={() => {
-                  handleClick(tag);
-                }}
-              >
-                {tag}
-              </button>
-            ))}
-          </div>
-          <div className="py-10">
             <input
               type="search"
               placeholder="Search"
