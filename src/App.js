@@ -18,7 +18,6 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
-      <Shop items={cart} />
       <div>
         <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
           Confirm purchase
@@ -88,23 +87,21 @@ const App = () => {
           {ProductsCategory.map((product, index) => (
             <div key={index} className="group relative shadow-lg">
               <div className="min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none">
-                <img alt={product.title} src={product.image} className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
+                <img alt="Product Image" src={product.image} className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
               </div>
               <div className="flex justify-between p-3">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                  <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
                   </h3>
-
-                  <div>
-                  <button className="btn btn-outline-secondary btn-sm" variant="light" onClick={() => removeFromCart(product.id)}>-</button>
-                  <span className="px-2">{howManyofThis(product.id)}</span>
-                  <button className="btn btn-outline-secondary btn-sm" variant="light" onClick={() => addToCart(product)}>+</button>
                 </div>
-
-                  <p className="text-sm font-medium text-green-600">${product.price}</p>
-                </div>
-                
+              </div>
+              <p className="flex justify-between p-3 text-sm font-medium text-green-600">${product.price}</p>
+              <div class="col"></div>
+              <div class="col">
+                ${product.price} <span class="close">&#10005;</span>
+                {howManyofThis(product.id)}
               </div>
             </div>
           ))}
