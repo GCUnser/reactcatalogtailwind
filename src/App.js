@@ -226,7 +226,7 @@ const App = () => {
                   <button className="btn btn-info rounded-pill px-10" type="submit">
                     Confirm Purchase
                   </button> {" "}
-                  <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+                  <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => {setView("products"); setQuery(''); setProductsCategory(Products);}}>
                 Back to Products
               </button>
                 </div>
