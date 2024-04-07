@@ -20,10 +20,14 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
       <div>Total: ${total.toFixed(2)}</div>
       <Shop items={cart} />
       <div>
-      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>Confirm purchase</button>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
+          Confirm purchase
+        </button>
       </div>
       <div>
-      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>Back to Products</button>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+          Back to Products
+        </button>
       </div>
     </div>
   );
@@ -60,7 +64,7 @@ const App = () => {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
-  
+
   const removeFromCart = (product) => {
     const existingItem = cart.find((item) => item.id === product.id);
     if (existingItem.quantity > 1) {
