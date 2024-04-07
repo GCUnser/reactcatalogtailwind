@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Products } from "./Products";
 import "./App.css";
-import Shop from "./Shopping";
 import { useForm } from "react-hook-form";
+import "bootstrap/dist/css/bootstrap.css";
 
 const App = () => {
   const [ProductsCategory, setProductsCategory] = useState(Products);
@@ -50,7 +50,7 @@ const App = () => {
     return (
       <div className="category-section">
         <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length})</h2>
-        <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}>
+        <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 320px)", overflowY: "scroll" }}>
           {/* Loop Products */}
           {ProductsCategory.map((product, index) => (
             <div key={index} className="group relative shadow-lg">
@@ -162,15 +162,15 @@ const App = () => {
                 <label htmlFor="fullName" className="form-label">
                   Full Name
                 </label>
-                <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
-                {errors.fullName && <p>Name is required.</p>}
+                <input {...register("fullName", { required: true })} className="form-control" id="fullName" placeholder="FirstName LastName" />
+                {errors.fullName && <p className="text-danger">Full Name is required.</p>}
               </div>
 
               <div className="mb-3">
                 <label htmlFor="email" className="form-label">
                   Email
                 </label>
-                <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} className="form-control" id="email" placeholder="Email" />
+                <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} className="form-control" id="email" placeholder="email@example.com" />
                 {errors.email && <p className="text-danger">Email is required.</p>}
               </div>
 
@@ -218,23 +218,20 @@ const App = () => {
                   <label htmlFor="zip" className="form-label">
                     Zip
                   </label>
-                  <input {...register("zip", { required: true })} className="form-control" id="zip" placeholder="Zip" />
+                  <input {...register("zip", { required: true, pattern: /^\d{5}$/ })} className="form-control" id="zip" placeholder="Zip" />
                   {errors.zip && <p className="text-danger">Zip is required.</p>}
                 </div>
 
-                <div>
+                <div style={{paddingBottom: '30px'}}>
                   <button className="btn btn-info rounded-pill px-10" type="submit">
-                    Confirm purchase
-                  </button>
+                    Confirm Purchase
+                  </button> {" "}
+                  <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+                Back to Products
+              </button>
                 </div>
               </div>
             </form>
-
-            <div>
-              <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
-                Back to Products
-              </button>
-            </div>
           </div>
         </div>
       </div>
@@ -276,9 +273,9 @@ const App = () => {
     <div className="flex fixed flex-col">
       <div className="w-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
         <div className="px-6 py-4">
-          <h1 className="text-3xl mb-2 font-bold text-teal-500">Product Catalog App</h1>
+          <h1 className="text-3xl mb-2 font-bold text-teal-500">Assignment 02 - Product Catalog and Cart App</h1>
           <p className="text-gray-700 text-black">
-            by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
+            by <b style={{ color: "teal" }}>Gabriel Unser and Muralikrishna Patibandla</b>
           </p>
           <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("cart")}>
             Checkout
