@@ -79,31 +79,31 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
               <label htmlFor="email" className="form-label">
                 Email
               </label>
-              <input type="text" className="form-control" id="email" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} placeholder="Credit Card" />
-              {errors.email && <p>Email is required.</p>}
+              <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} className="form-control" id="email" placeholder="Credit Card" />
+              {errors.email && <p className="text-danger">Email is required.</p>}
             </div>
 
             <div className="mb-3">
               <label htmlFor="card" className="form-label">
                 Card
               </label>
-              <input type="text" className="form-control" id="card" {...register("creditCard", { required: true })} placeholder="XXXX-XXXX-XXXX-XXXX" />
-              {errors.creditCard && <p>Card is required.</p>}
+              <input {...register("creditCard", { required: true })} className="form-control" id="card" placeholder="XXXX-XXXX-XXXX-XXXX" />
+              {errors.creditCard && <p className="text-danger">Card is required.</p>}
             </div>
 
             <div className="mb-3">
               <label htmlFor="address" className="form-label">
                 Address
               </label>
-              <input type="text" className="form-control" id="address" {...register("address", { required: true })} placeholder="Address" />
-              {errors.address && <p>Address is required.</p>}
+              <input {...register("address", { required: true })} className="form-control" id="address" placeholder="Address" />
+              {errors.address && <p className="text-danger">Address is required.</p>}
             </div>
 
             <div className="mb-3">
               <label htmlFor="address2" className="form-label">
                 Address 2 (Optional)
               </label>
-              <input type="text" className="form-control" id="address2" {...register("address2")} placeholder="Address 2" />
+              <input {...register("address2")} className="form-control" id="address2" placeholder="Address 2" />
             </div>
 
             <div className="row g-3">
@@ -111,24 +111,24 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
                 <label htmlFor="city" className="form-label">
                   City
                 </label>
-                <input type="text" className="form-control" id="city" {...register("city", { required: true })} placeholder="City" />
-                {errors.city && <p>City is required.</p>}
+                <input {...register("city", { required: true })} className="form-control" id="city" placeholder="City" />
+                {errors.city && <p className="text-danger">City is required.</p>}
               </div>
 
               <div className="col-md-4">
                 <label htmlFor="state" className="form-label">
                   State
                 </label>
-                <input type="text" className="form-control" id="state" {...register("state", { required: true })} placeholder="State" />
-                {errors.state && <p>State is required.</p>}
+                <input {...register("state", { required: true })} className="form-control" id="state" placeholder="State" />
+                {errors.state && <p className="text-danger">State is required.</p>}
               </div>
 
               <div className="col-md-2">
                 <label htmlFor="zip" className="form-label">
                   Zip
                 </label>
-                <input type="text" className="form-control" id="zip" {...register("zip", { required: true })} placeholder="Zip" />
-                {errors.zip && <p>Zip is required.</p>}
+                <input {...register("zip", { required: true })} className="form-control" id="zip" placeholder="Zip" />
+                {errors.zip && <p className="text-danger">Zip is required.</p>}
               </div>
 
               <div>
