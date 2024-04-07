@@ -243,7 +243,7 @@ const App = () => {
 
   const ConfirmView = ({ cart, setView }) => {
     const updateHooks = () => {
-      setView("cart");
+      setView("products");
       setDataF({});
     };
 
@@ -265,7 +265,7 @@ const App = () => {
         <p>
           {dataF.city},{dataF.state} {dataF.zip}{" "}
         </p>
-        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={updateHooks}>
           Back to Products
         </button>
       </div>
