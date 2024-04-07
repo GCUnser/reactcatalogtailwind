@@ -17,7 +17,29 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
-      <button onClick={() => setView('products')}>Back to Products</button>
+      <div>
+        <button onClick={() => setView("confirm")}>Confirm purchase</button>
+      </div>
+      <div>
+        <button onClick={() => setView("products")}>Back to Products</button>
+      </div>
+    </div>
+  );
+};
+
+const ConfirmView = ({ cart, setView }) => {
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  return (
+    <div>
+      <h2>Order summary</h2>
+      {cart.map((item, index) => (
+        <div key={index}>
+          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
+          {item.title} - ${item.price} x {item.quantity}
+        </div>
+      ))}
+      <div>Total: ${total.toFixed(2)}</div>
+      <button onClick={() => setView("products")}>Back to Products</button>
     </div>
   );
 };
@@ -26,12 +48,12 @@ const App = () => {
   const [ProductsCategory, setProductsCategory] = useState(Products);
   const [query, setQuery] = useState("");
   const [cart, setCart] = useState([]);
-  const [view, setView] = useState('products'); // or 'cart'
+  const [view, setView] = useState("products"); // or 'cart'
 
   const addToCart = (product) => {
     let found = cart.some((item) => item.id === product.id);
     if (found) {
-      setCart(cart.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item ));
+      setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)));
     } else {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
@@ -40,7 +62,7 @@ const App = () => {
   const removeFromCart = (product) => {
     const existingItem = cart.find((item) => item.id === product.id);
     if (existingItem.quantity > 1) {
-      setCart(cart.map((item) => item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item));
+      setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item)));
     } else {
       setCart(cart.filter((item) => item.id !== product.id));
     }
@@ -93,7 +115,7 @@ const App = () => {
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
-          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView('cart')}>
+          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("cart")}>
             Checkout
           </button>
           <div className="py-3">
@@ -111,8 +133,9 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500"
         </div>
       </div>
       <div className="ml-5 p-3 xl:basis-4/5">
-        {view === 'products' && render_products(ProductsCategory)}
-        {view === 'cart' && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
+        {view === "products" && render_products(ProductsCategory)}
+        {view === "cart" && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
+        {view === "confirm" && <ConfirmView cart={cart} setView={setView} />}
       </div>
     </div>
   );
