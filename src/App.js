@@ -1,58 +1,83 @@
-import "./App.css";
-import logo from "./logo.png";
-
 import React, { useState } from "react";
 import { Products } from "./Products";
-import { Categories } from "./Categories";
+import "./App.css";
 
-const render_products = (ProductsCategory) => {
+const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+
   return (
-    <div className="category-section fixed">
-      <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length})</h2>
-      <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}>
-        {/* Loop Products */}
-        {ProductsCategory.map((product, index) => (
-          <div key={index} className="group relative shadow-lg">
-            <div className=" min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none">
-              <img alt="Product Image" src={product.image} className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
-            </div>
-            <div className="flex justify-between p-3">
-              <div>
-                <h3 className="text-sm text-gray-700">
-                  <a href={product.href}>
-                    <span aria-hidden="true" className="absolute inset-0" />
-                    <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
-                  </a>
-                  <p>Tag - {product.category}</p>
-                </h3>
-                <p className="mt-1 text-sm text-gray-500">Rating: {product.rating.rate}</p>
-              </div>
-              <p className="text-sm font-medium text-green-600">${product.price}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+    <div>
+      <h2>Cart</h2>
+      {cart.map((item, index) => (
+        <div key={index}>
+          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
+          {item.title} - ${item.price} x {item.quantity}
+          <button onClick={() => removeFromCart(item)}>-</button>
+          <button onClick={() => addToCart(item)}>+</button>
+        </div>
+      ))}
+      <div>Total: ${total.toFixed(2)}</div>
+      <button onClick={() => setView('products')}>Back to Products</button>
     </div>
   );
 };
 
 const App = () => {
-  console.log("Step 1: load Products in a useState");
   const [ProductsCategory, setProductsCategory] = useState(Products);
   const [query, setQuery] = useState("");
+  const [cart, setCart] = useState([]);
+  const [view, setView] = useState('products'); // or 'cart'
 
-  function handleClick(tag) {
-    console.log("Step 4 : in handleClick", tag);
-    let filtered = Products.filter((cat) => cat.category === tag);
-    // modify useState
-    setProductsCategory(filtered);
-    // ProductsCategory = filtered;
-    console.log("Step 5 : ", Products.length, ProductsCategory.length);
-  }
+  const addToCart = (product) => {
+    let found = cart.some((item) => item.id === product.id);
+    if (found) {
+      setCart(cart.map((item) => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item ));
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
+    }
+  };
+
+  const removeFromCart = (product) => {
+    const existingItem = cart.find((item) => item.id === product.id);
+    if (existingItem.quantity > 1) {
+      setCart(cart.map((item) => item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item));
+    } else {
+      setCart(cart.filter((item) => item.id !== product.id));
+    }
+  };
+
+  const render_products = (ProductsCategory) => {
+    return (
+      <div className="category-section">
+        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length})</h2>
+        <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}>
+          {/* Loop Products */}
+          {ProductsCategory.map((product, index) => (
+            <div key={index} className="group relative shadow-lg">
+              <div className="min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none">
+                <img alt="Product Image" src={product.image} className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
+              </div>
+              <div className="flex justify-between p-3">
+                <div>
+                  <h3 className="text-sm text-gray-700">
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
+                  </h3>
+                  <p>Tag - {product.category}</p>
+                </div>
+                <p className="mt-1 text-sm text-gray-500">Rating: {product.rating.rate}</p>
+              </div>
+              <p className="text-sm font-medium text-green-600">${product.price}</p>
+              <button onClick={() => addToCart(product)}>Add to Cart</button>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
 
   const handleChange = (e) => {
     setQuery(e.target.value);
-    console.log("Step 6 : in handleChange, Target Value :", e.target.value, " Query Value :", query);
     const results = Products.filter((eachProduct) => {
       if (e.target.value === "") return ProductsCategory;
       return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
@@ -64,11 +89,11 @@ const App = () => {
     <div className="flex fixed flex-col">
       <div className="w-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
         <div className="px-6 py-4">
-          <h1 className="text-3xl mb-2 font-bold text-teal-500"> Product Catalog App </h1>
+          <h1 className="text-3xl mb-2 font-bold text-teal-500">Product Catalog App</h1>
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
-          <button class="btn btn-info rounded-pill px-10" type="button">
+          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView('cart')}>
             Checkout
           </button>
           <div className="py-3">
@@ -86,8 +111,8 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500"
         </div>
       </div>
       <div className="ml-5 p-3 xl:basis-4/5">
-        {console.log("Before render :", Products.length, ProductsCategory.length)}
-        {render_products(ProductsCategory)}
+        {view === 'products' && render_products(ProductsCategory)}
+        {view === 'cart' && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
       </div>
     </div>
   );
