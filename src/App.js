@@ -11,43 +11,53 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
       <h2>Cart</h2>
       {cart.map((item, index) => (
         <div key={index}>
-          <img
-            className="img-fluid"
-            src={item.image}
-            width={150}
-            alt={item.title}
-          />
+          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
           {item.title} - ${item.price} x {item.quantity}
-          <button
-            className="btn btn-outline-secondary btn-sm"
-            onClick={() => removeFromCart(item.id)}
-          >
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => removeFromCart(item.id)}>
             -
           </button>
-          <button
-            className="btn btn-outline-secondary btn-sm"
-            onClick={() => addToCart(item)}
-          >
+          <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(item)}>
             +
           </button>
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
+      <form className="container mt-5">
+        <div>
+          <input placeholder="Email" />
+        </div>
+
+        <div>
+          <input placeholder="Credit Card" />
+        </div>
+
+        <div>
+          <input placeholder="Address" />
+        </div>
+
+        <div>
+          <input placeholder="Address 2" />
+        </div>
+
+        <div>
+          <input placeholder="City" />
+        </div>
+
+        <div>
+          <input placeholder="State" />
+        </div>
+
+        <div>
+          <input placeholder="Zip" />
+        </div>
+      </form>
       <div>
-        <button
-          className="btn btn-info rounded-pill px-10"
-          type="button"
-          onClick={() => setView("confirm")}
-        >
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
           Confirm purchase
         </button>
       </div>
       <div>
-        <button
-          className="btn btn-info rounded-pill px-10"
-          type="button"
-          onClick={() => setView("products")}
-        >
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
           Back to Products
         </button>
       </div>
@@ -62,12 +72,7 @@ const ConfirmView = ({ cart, setView }) => {
       <h2>Order summary</h2>
       {cart.map((item, index) => (
         <div key={index}>
-          <img
-            className="img-fluid"
-            src={item.image}
-            width={150}
-            alt={item.title}
-          />
+          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
           {item.title} - ${item.price} x {item.quantity}
         </div>
       ))}
@@ -122,50 +127,31 @@ const App = () => {
   const render_products = (ProductsCategory) => {
     return (
       <div className="category-section">
-        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">
-          Products ({ProductsCategory.length})
-        </h2>
-        <div
-          className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10"
-          style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}
-        >
+        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Products ({ProductsCategory.length})</h2>
+        <div className="m-6 p-3 mt-10 ml-0 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-6 xl:gap-x-10" style={{ maxHeight: "calc(100vh - 300px)", overflowY: "scroll" }}>
           {/* Loop Products */}
           {ProductsCategory.map((product, index) => (
             <div key={index} className="group relative shadow-lg">
               <div className="min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-60 lg:aspect-none">
-                <img
-                  alt={product.title}
-                  src={product.image}
-                  className="w-full h-full object-center object-cover lg:w-full lg:h-full"
-                />
+                <img alt={product.title} src={product.image} className="w-full h-full object-center object-cover lg:w-full lg:h-full" />
               </div>
               <div className="flex justify-between p-3">
                 <div>
                   <h3 className="text-sm text-gray-700">
-                    <span style={{ fontSize: "16px", fontWeight: "600" }}>
-                      {product.title}
-                    </span>
+                    <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
                   </h3>
 
                   <div>
-                    <button
-                      className="btn btn-outline-secondary btn-sm"
-                      onClick={() => removeFromCart(product.id)}
-                    >
+                    <button className="btn btn-outline-secondary btn-sm" onClick={() => removeFromCart(product.id)}>
                       -
                     </button>
                     <span className="px-2">{howManyofThis(product.id)}</span>
-                    <button
-                      className="btn btn-outline-secondary btn-sm"
-                      onClick={() => addToCart(product)}
-                    >
+                    <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(product)}>
                       +
                     </button>
                   </div>
 
-                  <p className="text-sm font-medium text-green-600">
-                    ${product.price}
-                  </p>
+                  <p className="text-sm font-medium text-green-600">${product.price}</p>
                 </div>
               </div>
             </div>
@@ -179,40 +165,25 @@ const App = () => {
     setQuery(e.target.value);
     const results = Products.filter((eachProduct) => {
       if (e.target.value === "") return ProductsCategory;
-      return eachProduct.title
-        .toLowerCase()
-        .includes(e.target.value.toLowerCase());
+      return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setProductsCategory(results);
   };
 
   return (
     <div className="flex fixed flex-col">
-      <div
-        className="w-screen bg-gray-100 xl:basis-1/5"
-        style={{ minWidth: "65%" }}
-      >
+      <div className="w-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
         <div className="px-6 py-4">
-          <h1 className="text-3xl mb-2 font-bold text-teal-500">
-            Product Catalog App
-          </h1>
+          <h1 className="text-3xl mb-2 font-bold text-teal-500">Product Catalog App</h1>
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
-          <button
-            className="btn btn-info rounded-pill px-10"
-            type="button"
-            onClick={() => setView("cart")}
-          >
+          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("cart")}>
             Checkout
           </button>
-          <button
-          className="btn btn-info rounded-pill px-10"
-          type="button"
-          onClick={() => setView("products")}
-        >
-          Products
-        </button>
+          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+            Products
+          </button>
           <div className="py-3">
             <input
               type="search"
@@ -229,14 +200,7 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500"
       </div>
       <div className="ml-5 p-3 xl:basis-4/5">
         {view === "products" && render_products(ProductsCategory)}
-        {view === "cart" && (
-          <CartView
-            cart={cart}
-            addToCart={addToCart}
-            removeFromCart={removeFromCart}
-            setView={setView}
-          />
-        )}
+        {view === "cart" && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
         {view === "confirm" && <ConfirmView cart={cart} setView={setView} />}
       </div>
     </div>
