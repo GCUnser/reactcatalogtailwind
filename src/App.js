@@ -206,6 +206,13 @@ const App = () => {
           >
             Checkout
           </button>
+          <button
+          className="btn btn-info rounded-pill px-10"
+          type="button"
+          onClick={() => setView("products")}
+        >
+          Products
+        </button>
           <div className="py-3">
             <input
               type="search"
