@@ -245,6 +245,7 @@ const App = () => {
       setCart([]);
       setDataF({}); 
       setQuery(''); 
+      setProductsCategory(Products); 
       setView("products");
     };
   
