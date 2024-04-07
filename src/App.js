@@ -20,10 +20,14 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
       <div>Total: ${total.toFixed(2)}</div>
       <Shop items={cart} />
       <div>
-      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>Confirm purchase</button>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
+          Confirm purchase
+        </button>
       </div>
       <div>
-      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>Back to Products</button>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+          Back to Products
+        </button>
       </div>
     </div>
   );
@@ -60,7 +64,7 @@ const App = () => {
       setCart([...cart, { ...product, quantity: 1 }]);
     }
   };
-  
+
   const removeFromCart = (product) => {
     const existingItem = cart.find((item) => item.id === product.id);
     if (existingItem.quantity > 1) {
@@ -92,25 +96,23 @@ const App = () => {
                     <span aria-hidden="true" className="absolute inset-0" />
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
                   </h3>
-                  <p>Tag - {product.category}</p>
                 </div>
-                <p className="mt-1 text-sm text-gray-500">Rating: {product.rating.rate}</p>
               </div>
-              <p className="text-sm font-medium text-green-600">${product.price}</p>
+              <p className="flex justify-between p-3 text-sm font-medium text-green-600">${product.price}</p>
               <div class="col">
-          <button type="button" variant="light" onClick={() => removeFromCart(product)}>
-            {" "}
-            -{" "}
-          </button>{" "}
-          <button type="button" variant="light" onClick={() => addToCart(product)}>
-            {" "}
-            +{" "}
-          </button>
-        </div>
-        <div class="col">
-          ${product.price} <span class="close">&#10005;</span>
-          {howManyofThis(product.id)}
-        </div>
+                <button type="button" variant="light" onClick={() => removeFromCart(product)}>
+                  {" "}
+                  -{" "}
+                </button>{" "}
+                <button type="button" variant="light" onClick={() => addToCart(product)}>
+                  {" "}
+                  +{" "}
+                </button>
+              </div>
+              <div class="col">
+                ${product.price} <span class="close">&#10005;</span>
+                {howManyofThis(product.id)}
+              </div>
             </div>
           ))}
         </div>
