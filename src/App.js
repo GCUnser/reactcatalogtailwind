@@ -3,6 +3,7 @@ import { Products } from "./Products";
 import "./App.css";
 import { useForm } from "react-hook-form";
 import "bootstrap/dist/css/bootstrap.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 const App = () => {
   const [ProductsCategory, setProductsCategory] = useState(Products);
@@ -151,10 +152,9 @@ const App = () => {
 
         <hr />
         <br></br>
-        <h3 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Payment Information</h3>
-        <br></br>
+        <h3 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title" style={{marginTop: '40px'}}>Payment Information</h3>
         <div className="container"></div>
-
+<br></br>
         <div className="row">
           <div className="col-lg-6">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -222,12 +222,12 @@ const App = () => {
                   {errors.zip && <p className="text-danger">Zip is required.</p>}
                 </div>
 
-                <div style={{paddingBottom: '30px'}}>
-                  <button className="btn btn-info rounded-pill px-10" type="submit">
-                    Confirm Purchase
+                <div className="float-right" style={{paddingBottom: '30px', marginTop: '30px'}}>
+                  <button className="btn btn-info rounded-pill px-2" style={{marginRight: '12px'}} type="submit">
+                  <i className="bi bi-check-circle" style={{paddingRight: '12px'}}></i>Confirm Purchase
                   </button> {" "}
-                  <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => {setView("products"); setQuery(''); setProductsCategory(Products);}}>
-                Back to Products
+                  <button className="btn btn-info rounded-pill px-3" type="button" onClick={() => {setView("products"); setQuery(''); setProductsCategory(Products);}}>
+                  <i className="bi bi-box-arrow-left" style={{paddingRight: '12px'}}></i>Back to Products
               </button>
                 </div>
               </div>
@@ -289,8 +289,8 @@ const App = () => {
             {dataF.city}, {dataF.state} - {dataF.zip}{" "}
           </p>
           <br></br>
-          <button className="btn btn-info rounded-pill px-10" type="button" onClick={backToProducts}>
-            Back to Products
+          <button className="btn btn-info rounded-pill px-3" type="button" onClick={backToProducts}>
+          <i className="bi bi-box-arrow-left" style={{paddingRight: '12px'}}></i>Back to Products
           </button>
         </div>
       </div>
@@ -302,15 +302,18 @@ const App = () => {
       <div className="w-screen bg-gray-100 xl:basis-1/5" style={{ minWidth: "65%" }}>
         <div className="px-6 py-4">
           <h1 className="text-3xl mb-2 font-bold text-teal-500">Assignment 02 - Product Catalog and Cart App</h1>
+          <div className="float-right" style={{paddingBottom: '15px'}}>
+          <button className="btn btn-info rounded-pill px-3" style={{marginRight: '12px'}} type="button" onClick={() => setView("cart")}>
+          <i className="bi bi-cart3" style={{paddingRight: '12px'}}></i>Checkout
+          </button>{" "}
+          <button className="btn btn-info rounded-pill px-3" type="button" onClick={() => setView("products")}>
+          <i className="bi bi-bag-plus" style={{paddingRight: '12px'}}></i>Products
+          </button>
+          </div>
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser and Muralikrishna Patibandla</b>
           </p>
-          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("cart")}>
-            Checkout
-          </button>{" "}
-          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
-            Products
-          </button>
+          
           <div className="py-3">
             <input
               type="search"
