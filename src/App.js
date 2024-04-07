@@ -33,7 +33,6 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
-      <Shop items={cart} />
       <div>
         <button
           className="btn btn-info rounded-pill px-10"
