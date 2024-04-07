@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Products } from "./Products";
 import "./App.css";
+import Shop from "./Shopping";
 
 const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -17,6 +18,7 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
+      <Shop items={cart} />
       <div>
         <button onClick={() => setView("confirm")}>Confirm purchase</button>
       </div>

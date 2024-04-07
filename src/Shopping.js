@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import items from "./products.json";
 
-const Shop = () => {
+const Shop = ({ items }) => {
   const [cart, setCart] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
 
@@ -51,11 +50,7 @@ const Shop = () => {
           <div class="row">{el.category}</div>
         </div>
         <div class="col">
-          <button
-            type="button"
-            variant="light"
-            onClick={() => removeFromCart(el)}
-          >
+          <button type="button" variant="light" onClick={() => removeFromCart(el)}>
             {" "}
             -{" "}
           </button>{" "}
@@ -86,9 +81,7 @@ const Shop = () => {
                     <b>319 Shopping Cart</b>
                   </h4>
                 </div>
-                <div class="col align-self-center text-right text-muted">
-                  Products selected {cart.length}
-                </div>
+                <div class="col align-self-center text-right text-muted">Products selected {cart.length}</div>
               </div>
             </div>
             <div>{listItems}</div>
