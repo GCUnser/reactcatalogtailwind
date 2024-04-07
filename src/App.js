@@ -4,170 +4,6 @@ import "./App.css";
 import Shop from "./Shopping";
 import { useForm } from "react-hook-form";
 
-const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const [dataF, setDataF] = useState({});
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-
-  const onSubmit = (data) => {
-    // update hooks
-    setView("confirm");
-    setDataF(data);
-  };
-  return (
-    <div className="container mt-3" style={{ maxHeight: "calc(100vh - 260px)", overflowY: "auto" }}>
-      <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Cart</h2>
-      <div className="table-responsive">
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Item</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {cart.map((item, index) => (
-              <tr key={index}>
-                <td>
-                  <img src={item.image} width="50" className="img-thumbnail" alt={item.title} />
-                  {item.title}
-                </td>
-                <td>
-                  <div className="btn-group" role="group">
-                    <button className="btn btn-outline-secondary btn-sm" onClick={() => removeFromCart(item.id)}>
-                      -
-                    </button>
-                    <span className="px-3">{item.quantity}</span>
-                    <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(item)}>
-                      +
-                    </button>
-                  </div>
-                </td>
-                <td>${(item.price * item.quantity).toFixed(2)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      <div className="d-flex justify-content-between align-items-center">
-        <p className="total">Total: ${total.toFixed(2)}</p>
-      </div>
-
-      <hr />
-      <br></br>
-      <h3 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Payment Information</h3>
-      <br></br>
-      <div className="container"></div>
-
-      <div className="row">
-        <div className="col-lg-6">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-3">
-              <label htmlFor="fullName" className="form-label">
-                Full Name
-              </label>
-              <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
-              {errors.fullName && <p>Name is required.</p>}
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} className="form-control" id="email" placeholder="Credit Card" />
-              {errors.email && <p className="text-danger">Email is required.</p>}
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="card" className="form-label">
-                Card
-              </label>
-              <input {...register("creditCard", { required: true })} className="form-control" id="card" placeholder="XXXX-XXXX-XXXX-XXXX" />
-              {errors.creditCard && <p className="text-danger">Card is required.</p>}
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="address" className="form-label">
-                Address
-              </label>
-              <input {...register("address", { required: true })} className="form-control" id="address" placeholder="Address" />
-              {errors.address && <p className="text-danger">Address is required.</p>}
-            </div>
-
-            <div className="mb-3">
-              <label htmlFor="address2" className="form-label">
-                Address 2 (Optional)
-              </label>
-              <input {...register("address2")} className="form-control" id="address2" placeholder="Address 2" />
-            </div>
-
-            <div className="row g-3">
-              <div className="col-md-6">
-                <label htmlFor="city" className="form-label">
-                  City
-                </label>
-                <input {...register("city", { required: true })} className="form-control" id="city" placeholder="City" />
-                {errors.city && <p className="text-danger">City is required.</p>}
-              </div>
-
-              <div className="col-md-4">
-                <label htmlFor="state" className="form-label">
-                  State
-                </label>
-                <input {...register("state", { required: true })} className="form-control" id="state" placeholder="State" />
-                {errors.state && <p className="text-danger">State is required.</p>}
-              </div>
-
-              <div className="col-md-2">
-                <label htmlFor="zip" className="form-label">
-                  Zip
-                </label>
-                <input {...register("zip", { required: true })} className="form-control" id="zip" placeholder="Zip" />
-                {errors.zip && <p className="text-danger">Zip is required.</p>}
-              </div>
-
-              <div>
-                <button className="btn btn-info rounded-pill px-10" type="submit">
-                  Confirm purchase
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <div>
-            <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
-              Back to Products
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const ConfirmView = ({ cart, setView }) => {
-  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  return (
-    <div>
-      <h2>Order summary</h2>
-      {cart.map((item, index) => (
-        <div key={index}>
-          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
-          {item.title} - ${item.price} x {item.quantity}
-        </div>
-      ))}
-      <div>Total: ${total.toFixed(2)}</div>
-      <button onClick={() => setView("products")}>Back to Products</button>
-    </div>
-  );
-};
-
 const App = () => {
   const [ProductsCategory, setProductsCategory] = useState(Products);
   const [query, setQuery] = useState("");
@@ -254,6 +90,186 @@ const App = () => {
       return eachProduct.title.toLowerCase().includes(e.target.value.toLowerCase());
     });
     setProductsCategory(results);
+  };
+
+  //2 view functions
+
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [dataF, setDataF] = useState({});
+
+  const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
+    const onSubmit = (data) => {
+      // update hooks
+      setView("confirm");
+      setDataF(data);
+    };
+    return (
+      <div className="container mt-3" style={{ maxHeight: "calc(100vh - 260px)", overflowY: "auto" }}>
+        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Cart</h2>
+        <div className="table-responsive">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cart.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <img src={item.image} width="50" className="img-thumbnail" alt={item.title} />
+                    {item.title}
+                  </td>
+                  <td>
+                    <div className="btn-group" role="group">
+                      <button className="btn btn-outline-secondary btn-sm" onClick={() => removeFromCart(item.id)}>
+                        -
+                      </button>
+                      <span className="px-3">{item.quantity}</span>
+                      <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(item)}>
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td>${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="d-flex justify-content-between align-items-center">
+          <p className="total">Total: ${total.toFixed(2)}</p>
+        </div>
+
+        <hr />
+        <br></br>
+        <h3 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Payment Information</h3>
+        <br></br>
+        <div className="container"></div>
+
+        <div className="row">
+          <div className="col-lg-6">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="mb-3">
+                <label htmlFor="fullName" className="form-label">
+                  Full Name
+                </label>
+                <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
+                {errors.fullName && <p>Name is required.</p>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input {...register("email", { required: true, pattern: /^\S+@\S+$/i })} className="form-control" id="email" placeholder="Email" />
+                {errors.email && <p className="text-danger">Email is required.</p>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="card" className="form-label">
+                  Card
+                </label>
+                <input {...register("creditCard", { required: true })} className="form-control" id="card" placeholder="XXXX-XXXX-XXXX-XXXX" />
+                {errors.creditCard && <p className="text-danger">Card is required.</p>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="address" className="form-label">
+                  Address
+                </label>
+                <input {...register("address", { required: true })} className="form-control" id="address" placeholder="Address" />
+                {errors.address && <p className="text-danger">Address is required.</p>}
+              </div>
+
+              <div className="mb-3">
+                <label htmlFor="address2" className="form-label">
+                  Address 2 (Optional)
+                </label>
+                <input {...register("address2")} className="form-control" id="address2" placeholder="Address 2" />
+              </div>
+
+              <div className="row g-3">
+                <div className="col-md-6">
+                  <label htmlFor="city" className="form-label">
+                    City
+                  </label>
+                  <input {...register("city", { required: true })} className="form-control" id="city" placeholder="City" />
+                  {errors.city && <p className="text-danger">City is required.</p>}
+                </div>
+
+                <div className="col-md-4">
+                  <label htmlFor="state" className="form-label">
+                    State
+                  </label>
+                  <input {...register("state", { required: true })} className="form-control" id="state" placeholder="State" />
+                  {errors.state && <p className="text-danger">State is required.</p>}
+                </div>
+
+                <div className="col-md-2">
+                  <label htmlFor="zip" className="form-label">
+                    Zip
+                  </label>
+                  <input {...register("zip", { required: true })} className="form-control" id="zip" placeholder="Zip" />
+                  {errors.zip && <p className="text-danger">Zip is required.</p>}
+                </div>
+
+                <div>
+                  <button className="btn btn-info rounded-pill px-10" type="submit">
+                    Confirm purchase
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <div>
+              <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+                Back to Products
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const ConfirmView = ({ cart, setView }) => {
+    const updateHooks = () => {
+      setView("cart");
+      setDataF({});
+    };
+
+    return (
+      <div>
+        <h2>Order summary</h2>
+        {cart.map((item, index) => (
+          <div key={index}>
+            <img className="img-fluid" src={item.image} width={150} alt={item.title} />
+            {item.title} - ${item.price} x {item.quantity}
+          </div>
+        ))}
+        <div>Total: ${total.toFixed(2)}</div>
+        <h3>Name: {dataF.fullName}</h3>
+        <p>Email: {dataF.email}</p>
+        <p>Card: {dataF.creditCard}</p>
+        <p>Address 1:{dataF.address}</p>
+        <p>Address 2:{dataF.address2}</p>
+        <p>
+          {dataF.city},{dataF.state} {dataF.zip}{" "}
+        </p>
+        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+          Back to Products
+        </button>
+      </div>
+    );
   };
 
   return (
