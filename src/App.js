@@ -242,6 +242,9 @@ const App = () => {
     const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
   
     const backToProducts = () => {
+      setCart([]);
+      setDataF({}); 
+      setQuery(''); 
       setView("products");
     };
   
@@ -275,7 +278,7 @@ const App = () => {
         </div>
         <div><strong>Total: </strong>${total.toFixed(2)}</div>
         <br></br>
-        <div>
+        <div style={{paddingBottom: '30px'}}>
           <h3><strong>Name: </strong>{dataF.fullName}</h3>
           <p><strong>Email: </strong>{dataF.email}</p>
           <p><strong>Card: </strong>XXXX-XXXX-XXXX-{(dataF.creditCard || '').slice(-4)}</p>
