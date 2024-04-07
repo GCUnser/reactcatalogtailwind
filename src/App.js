@@ -66,20 +66,29 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
 
       <div className="row">
         <div className="col-lg-6">
-          <form>
+          <form onSubmit={() => setView("confirm")}>
             <div className="mb-3">
               <label htmlFor="fullName" className="form-label">
                 Full Name
               </label>
               <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
+              {errors.fullName && <p>Name is required.</p>}
             </div>
 
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
-              <input type="text" className="form-control" id="email" {...register("creditCard", { required: true })} placeholder="Credit Card" />
-              {errors.creditCard && <p>Credit Card is required.</p>}
+              <input type="text" className="form-control" id="email" {...register("email", { required: true, pattern: /^\S+@\S+$/i })} placeholder="Credit Card" />
+              {errors.email && <p>Email is required.</p>}
+            </div>
+
+            <div className="mb-3">
+              <label htmlFor="card" className="form-label">
+                Card
+              </label>
+              <input type="text" className="form-control" id="card" {...register("creditCard", { required: true })} placeholder="XXXX-XXXX-XXXX-XXXX" />
+              {errors.creditCard && <p>Card is required.</p>}
             </div>
 
             <div className="mb-3">
@@ -123,7 +132,7 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
               </div>
 
               <div>
-                <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
+                <button className="btn btn-info rounded-pill px-10" type="submit">
                   Confirm purchase
                 </button>
               </div>
