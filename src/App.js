@@ -70,6 +70,11 @@ const App = () => {
     }
   };
 
+  function howManyofThis(id) {
+    let hmot = cart.filter((cartItem) => cartItem.id === id);
+    return hmot.length;
+  }
+
   const render_products = (ProductsCategory) => {
     return (
       <div className="category-section">
@@ -92,7 +97,20 @@ const App = () => {
                 <p className="mt-1 text-sm text-gray-500">Rating: {product.rating.rate}</p>
               </div>
               <p className="text-sm font-medium text-green-600">${product.price}</p>
-              <button onClick={() => addToCart(product)}>Add to Cart</button>
+              <div class="col">
+          <button type="button" variant="light" onClick={() => removeFromCart(product)}>
+            {" "}
+            -{" "}
+          </button>{" "}
+          <button type="button" variant="light" onClick={() => addToCart(product)}>
+            {" "}
+            +{" "}
+          </button>
+        </div>
+        <div class="col">
+          ${product.price} <span class="close">&#10005;</span>
+          {howManyofThis(product.id)}
+        </div>
             </div>
           ))}
         </div>
