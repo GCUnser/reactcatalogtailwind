@@ -15,6 +15,7 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
 
   const onSubmit = (data) => {
     // update hooks
+    setView("confirm");
     setDataF(data);
   };
   return (
@@ -66,7 +67,7 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
 
       <div className="row">
         <div className="col-lg-6">
-          <form onSubmit={() => setView("confirm")}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-3">
               <label htmlFor="fullName" className="form-label">
                 Full Name
