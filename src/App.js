@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Products } from "./Products";
 import "./App.css";
+import Shop from "./Shopping";
 
 const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
@@ -17,9 +18,30 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
-      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView('products')}>
-            Back to Products
-          </button>
+      <Shop items={cart} />
+      <div>
+      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>Confirm purchase</button>
+      </div>
+      <div>
+      <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>Back to Products</button>
+      </div>
+    </div>
+  );
+};
+
+const ConfirmView = ({ cart, setView }) => {
+  const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  return (
+    <div>
+      <h2>Order summary</h2>
+      {cart.map((item, index) => (
+        <div key={index}>
+          <img className="img-fluid" src={item.image} width={150} alt={item.title} />
+          {item.title} - ${item.price} x {item.quantity}
+        </div>
+      ))}
+      <div>Total: ${total.toFixed(2)}</div>
+      <button onClick={() => setView("products")}>Back to Products</button>
     </div>
   );
 };
@@ -28,41 +50,25 @@ const App = () => {
   const [ProductsCategory, setProductsCategory] = useState(Products);
   const [query, setQuery] = useState("");
   const [cart, setCart] = useState([]);
-  const [cartTotal, setCartTotal] = useState(0);
-  const [view, setView] = useState('products'); // or 'cart'
+  const [view, setView] = useState("products"); // or 'cart'
 
-  useEffect(() => {
-    total();
-  }, [cart]);
-  const total = () => {
-    let totalVal = 0;
-    for (let i = 0; i < cart.length; i++) {
-      totalVal += cart[i].price;
+  const addToCart = (product) => {
+    let found = cart.some((item) => item.id === product.id);
+    if (found) {
+      setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item)));
+    } else {
+      setCart([...cart, { ...product, quantity: 1 }]);
     }
-    setCartTotal(totalVal);
   };
   
-  const addToCart = (product) => {
-    setCart([...cart, product]);
-  };
-
   const removeFromCart = (product) => {
-    let hardCopy = [...cart];
-    hardCopy = hardCopy.filter((cartItem) => cartItem.id !== product.id);
-    setCart(hardCopy);
+    const existingItem = cart.find((item) => item.id === product.id);
+    if (existingItem.quantity > 1) {
+      setCart(cart.map((item) => (item.id === product.id ? { ...item, quantity: item.quantity - 1 } : item)));
+    } else {
+      setCart(cart.filter((item) => item.id !== product.id));
+    }
   };
-
-  function howManyofThis(id) {
-    let hmot = cart.filter((cartItem) => cartItem.id === id);
-    return hmot.length;
-  }
-
-  const cartItems = cart.map((product) => (
-    <div key={product.id}>
-      <img class="img-fluid" src={product.image} width={150} />
-      {product.title}${product.price}
-    </div>
-  ));
 
   const render_products = (ProductsCategory) => {
     return (
@@ -81,28 +87,12 @@ const App = () => {
                     <span aria-hidden="true" className="absolute inset-0" />
                     <span style={{ fontSize: "16px", fontWeight: "600" }}>{product.title}</span>
                   </h3>
+                  <p>Tag - {product.category}</p>
                 </div>
                 <p className="mt-1 text-sm text-gray-500">Rating: {product.rating.rate}</p>
               </div>
               <p className="text-sm font-medium text-green-600">${product.price}</p>
-              <div class="col">
-          <button
-            type="button"
-            variant="light"
-            onClick={() => removeFromCart(product)}
-          >
-            {" "}
-            -{" "}
-          </button>{" "}
-          <button type="button" variant="light" onClick={() => addToCart(product)}>
-            {" "}
-            +{" "}
-          </button>
-        </div>
-        <div class="col">
-          ${product.price} <span class="close">&#10005;</span>
-          {howManyofThis(product.id)}
-        </div>
+              <button onClick={() => addToCart(product)}>Add to Cart</button>
             </div>
           ))}
         </div>
@@ -127,7 +117,7 @@ const App = () => {
           <p className="text-gray-700 text-black">
             by <b style={{ color: "teal" }}>Gabriel Unser solely</b>
           </p>
-          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView('cart')}>
+          <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("cart")}>
             Checkout
           </button>
           <div className="py-3">
@@ -145,8 +135,9 @@ dark:focus:ring-blue-500 dark:focus:border-blue-500"
         </div>
       </div>
       <div className="ml-5 p-3 xl:basis-4/5">
-        {view === 'products' && render_products(ProductsCategory)}
-        {view === 'cart' && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
+        {view === "products" && render_products(ProductsCategory)}
+        {view === "cart" && <CartView cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} setView={setView} />}
+        {view === "confirm" && <ConfirmView cart={cart} setView={setView} />}
       </div>
     </div>
   );
