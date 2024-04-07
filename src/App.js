@@ -22,7 +22,7 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
         </div>
       ))}
       <div>Total: ${total.toFixed(2)}</div>
-      <form className="container mt-5">
+      <form>
         <div>
           <input placeholder="Email" />
         </div>
