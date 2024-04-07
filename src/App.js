@@ -62,70 +62,73 @@ const CartView = ({ cart, addToCart, removeFromCart, setView }) => {
       <br></br>
       <h3 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Payment Information</h3>
       <br></br>
-      <div className="container">
-  <div className="row">
-    <div className="col-lg-6">
-      <form>
-        <div className="mb-3">
-          <label htmlFor="fullName" className="form-label">
-            Full Name
-          </label>
-          <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Email
-          </label>
-          <input {...register("creditCard", { required: true })} placeholder="Credit Card" />
-          {errors.creditCard && <p>Credit Card is required.</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="address" className="form-label">
-            Address
-          </label>
-          <input {...register("address", { required: true })} placeholder="Address" />
-          {errors.address && <p>Address is required.</p>}
-        </div>
-        <div className="mb-3">
-          <label htmlFor="address2" className="form-label">
-            Address 2 (Optional)
-          </label>
-          <input {...register("address2")} placeholder="Address 2" />
-        </div>
-        <div className="row g-3">
-          <div className="col-md-6">
-            <label htmlFor="city" className="form-label">
-              City
-            </label>
-            <input {...register("city", { required: true })} placeholder="City" />
-            {errors.city && <p>City is required.</p>}
-          </div>
-          <div className="col-md-4">
-            <label htmlFor="state" className="form-label">
-              State
-            </label>
-            <input {...register("state", { required: true })} placeholder="State" />
-            {errors.state && <p>State is required.</p>}
-          </div>
-          <div className="col-md-2">
-            <label htmlFor="zip" className="form-label">
-              Zip
-            </label>
-            <input {...register("zip", { required: true })} placeholder="Zip" />
-            {errors.zip && <p>Zip is required.</p>}
-          </div>
+      <div className="container"></div>
+
+      <div className="row">
+        <div className="col-lg-6">
+          <form>
+            <div className="mb-3">
+              <label htmlFor="fullName" className="form-label">
+                Full Name
+              </label>
+              <input type="text" className="form-control" id="fullName" placeholder="Full Name" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Email
+              </label>
+              <input {...register("creditCard", { required: true })} placeholder="Credit Card" />
+              {errors.creditCard && <p>Credit Card is required.</p>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="address" className="form-label">
+                Address
+              </label>
+              <input {...register("address", { required: true })} placeholder="Address" />
+              {errors.address && <p>Address is required.</p>}
+            </div>
+            <div className="mb-3">
+              <label htmlFor="address2" className="form-label">
+                Address 2 (Optional)
+              </label>
+              <input {...register("address2")} placeholder="Address 2" />
+            </div>
+            <div className="row g-3">
+              <div className="col-md-6">
+                <label htmlFor="city" className="form-label">
+                  City
+                </label>
+                <input {...register("city", { required: true })} placeholder="City" />
+                {errors.city && <p>City is required.</p>}
+              </div>
+              <div className="col-md-4">
+                <label htmlFor="state" className="form-label">
+                  State
+                </label>
+                <input {...register("state", { required: true })} placeholder="State" />
+                {errors.state && <p>State is required.</p>}
+              </div>
+              <div className="col-md-2">
+                <label htmlFor="zip" className="form-label">
+                  Zip
+                </label>
+                <input {...register("zip", { required: true })} placeholder="Zip" />
+                {errors.zip && <p>Zip is required.</p>}
+              </div>
+              <div>
+                <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
+                  Confirm purchase
+                </button>
+              </div>
+            </div>
+          </form>
+
           <div>
-            <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("confirm")}>
-              Confirm purchase
+            <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
+              Back to Products
             </button>
           </div>
         </div>
-      </form>
-
-      <div>
-        <button className="btn btn-info rounded-pill px-10" type="button" onClick={() => setView("products")}>
-          Back to Products
-        </button>
       </div>
     </div>
   );
