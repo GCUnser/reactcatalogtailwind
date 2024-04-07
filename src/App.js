@@ -178,8 +178,8 @@ const App = () => {
                 <label htmlFor="card" className="form-label">
                   Card
                 </label>
-                <input {...register("creditCard", { required: true })} className="form-control" id="card" placeholder="XXXX-XXXX-XXXX-XXXX" />
-                {errors.creditCard && <p className="text-danger">Card is required.</p>}
+                <input {...register("creditCard", { required: true, pattern: /^\d{16}$/ })} className="form-control" id="card" placeholder="XXXXXXXXXXXXXXXX" />
+                {errors.creditCard && <p className="text-danger">16-digit Card number is required.</p>}
               </div>
 
               <div className="mb-3">
@@ -246,22 +246,24 @@ const App = () => {
 
     return (
       <div>
-        <h2>Order summary</h2>
+        <h2 className="text-3xl font-extrabold tracking-tight text-gray-600 category-title">Order summary</h2><br></br>
         {cart.map((item, index) => (
           <div key={index}>
             <img className="img-fluid" src={item.image} width={150} alt={item.title} />
             {item.title} - ${item.price} x {item.quantity}
           </div>
         ))}
-        <div>Total: ${total.toFixed(2)}</div>
-        <h3>Name: {dataF.fullName}</h3>
-        <p>Email: {dataF.email}</p>
-        <p>Card: {dataF.creditCard}</p>
-        <p>Address 1:{dataF.address}</p>
-        <p>Address 2:{dataF.address2}</p>
+        <div><strong>Total: </strong>${total.toFixed(2)}</div>
+        <br></br>
+        <h3><strong>Name: </strong>{dataF.fullName}</h3>
+        <p><strong>Email: </strong>{dataF.email}</p>
+        <p><strong>Card: </strong>XXXX-XXXX-XXXX-{(dataF.creditCard).slice(-4)}</p>
+        <p><strong>Address: </strong><br></br>{dataF.address}</p>
+        <p>{dataF.address2}</p>
         <p>
-          {dataF.city},{dataF.state} {dataF.zip}{" "}
+          {dataF.city}, {dataF.state} - {dataF.zip}{" "}
         </p>
+        <br></br>
         <button className="btn btn-info rounded-pill px-10" type="button" onClick={updateHooks}>
           Back to Products
         </button>
